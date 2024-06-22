@@ -1,0 +1,63 @@
+--create database 
+CREATE DATABASE stockprices
+
+---create table
+CREATE TABLE s_p_500_stockprices (
+   symbol VARCHAR (200),
+   date DATE,
+   open DECIMAL,
+   high DECIMAL,
+   low DECIMAL,
+   volume INT,
+   close DECIMAL
+);
+
+SELECT
+    Date
+FROM
+    stockprices
+GROUP BY
+    Date
+ORDER BY
+    SUM(Volume) DESC
+LIMIT
+    1;
+
+
+-- If you could go back in time and invest in one stock from 1/2/2014 - 12/29/2017, which
+-- would you choose? What % gain would you realize?
+
+WITH
+    openingPrice AS (
+    SELECT
+        symbol,
+        open
+    FROM
+        s_p_500."table".s_p_table
+    WHERE
+        date = '2014-01-02'
+    ),
+
+    closingPrice AS (
+    SELECT
+        symbol,
+        close
+    FROM
+        s_p_500."table".s_p_table
+    WHERE
+        date = '2017-12-29'
+    )
+
+SELECT
+    op.symbol,
+    op.open,
+    cp.close,
+    (cp.close - op.open)/ op.open AS profitIndex
+FROM
+    openingPrice op
+INNER JOIN
+    closingPrice cp
+ON
+    op.symbol = cp.symbol
+ORDER BY
+    4 DESC;
