@@ -1,3 +1,5 @@
+# S_P_500_Stockprices_Analysis
+
 This project is a full documentation of SQL analysis using S&P 500 stock prices dataset as part of Utiva Data School Capstone Project
 
 ## Required Analysis
